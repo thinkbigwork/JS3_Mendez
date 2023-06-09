@@ -30,7 +30,7 @@ let nombre = prompt('Introduce tu nombre');
     do{
         if(q1=='SI'){
                 do{
-                    const seleccion = 'Ahora vamos a evaluar tus condiciones de trabajo. \nA continuación selecciona el equipo de trabajo que utilizás más frecuentemente: \n1 - PC de escritorio \n2 - notebook \n3 - celular' ;
+                    const seleccion = 'Ahora vamos a evaluar tus condiciones de trabajo. \nA continuación selecciona el equipo de trabajo que utilizás más frecuentemente: \n1 - PC de escritorio \n2 - Notebook \n3 - Celular' ;
                     op = prompt(seleccion);
                 }while(op !== '1' && op !== '2' && op !=='3');
                 contenido();

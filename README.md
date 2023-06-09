@@ -26,7 +26,7 @@ En esta primera etapa de JS la herramienta pretende que el usuario pueda evaluar
 -----------
 
 Es muy sencillo, carga el index.html, y sigue las instrucciones.
-
+https://thinkbigwork.github.io/JS1_Mendez/
 
 
 
