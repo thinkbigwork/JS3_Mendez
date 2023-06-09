@@ -2,15 +2,17 @@ working at home
 ====================
 <img src="https://github.com/thinkbigwork/WorkingAtHome/blob/main/img/headers/slide_working_at_home.png" align="center" height="240" alt="GridDB"/>
 
-https://thinkbigwork.github.io/WorkingAtHome/index.html
+https://thinkbigwork.github.io/JS1_Mendez/
 
 
 En tiempos de trabajo remoto, hacer un diagnóstico sobre las condiciones laborales dentro de nuestro propio hogar nos permite conocer cuáles son las problemáticas y las posibilidades de mejora de nuestro espacio de trabajo, y así poder trabajar de forma más eficiente, segura y sobre todo cuidar nuestra salud mental y física y cuidar el medio ambiente.
+
 
 Cómo funciona?
 -----------
 
 En escencia es un formulario tipo encuesta, pero lo que lo hace especial es su interactividad con el usuario para lograr una evaluación acorde a cada situación, ajustándose a cada necesidad, para evitar que el usuario pierda tiempo en preguntas standard que no tienen que ver con su situación particular.
+
 
 
 Estado de construcción
@@ -23,7 +25,7 @@ En esta primera etapa de JS la herramienta pretende que el usuario pueda evaluar
 ¿Cómo empezar?
 -----------
 
-Es muy sencillo, carga el index.html. 
+Es muy sencillo, carga el index.html, y sigue las instrucciones.
 
 
 
