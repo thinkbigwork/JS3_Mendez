@@ -1,16 +1,16 @@
-// definicion de variables globales
-let nombre ='';
-let password ='';
+// Definición de variables globales
+let nombre = '';
+let password = '';
 let profesion = '';
 let arrayDispositivos;
 let arrayLugares;
-let nombreUsuario;
+let arrayResultados = [];
+
 crearDevices();
 crearPlaces();
 
-//funcion de inicio
+// Función de inicio
 function iniciarCuestionario() {
-   
     nombre = document.getElementById('nombreInput').value.trim();
     password = document.getElementById('passwordInput').value.trim();
     profesion = document.getElementById('profesionInput').value.trim();
@@ -49,17 +49,16 @@ function usuario() {
     document.getElementById('bienvenida').innerText = '¡Bienvenido/a, ' + nombre + '!';
     document.getElementById('bienvenida').style.display = 'block';
 
-// Guardo datos de usuario en el localStorage
-const usuario = {
-    nombre: nombre,
-    password: password,
-    profesion: profesion,
-  };
-  
-  const usuarioJSON = JSON.stringify(usuario);
-  localStorage.setItem('usuario', usuarioJSON);
+    // Guardar datos de usuario en el localStorage
+    const usuario = {
+        nombre: nombre,
+        password: password,
+        profesion: profesion,
+    };
+    
+    const usuarioJSON = JSON.stringify(usuario);
+    localStorage.setItem('usuario', usuarioJSON);
 }
-
 
 function continuarRemoto() {
     const respuestaRemoto = document.querySelector('input[name="remoto"]:checked').value;
@@ -89,40 +88,50 @@ function cargarTiempo() {
         return;
     }
 
-    arrayDispositivos.mobile.tiempo = tiempoCelular;
-    arrayDispositivos.notebook.tiempo = tiempoNotebook;
-    arrayDispositivos.desktop.tiempo = tiempoPc;
+    arrayDispositivos.mobile.tiempo = parseInt(tiempoCelular);
+    arrayDispositivos.notebook.tiempo = parseInt(tiempoNotebook);
+    arrayDispositivos.desktop.tiempo = parseInt(tiempoPc);
+
+    let mob = evaluar(arrayDispositivos.mobile.tipo, arrayDispositivos.mobile.tiempo);
+    let not = evaluar(arrayDispositivos.notebook.tipo, arrayDispositivos.notebook.tiempo);
+    let desk = evaluar(arrayDispositivos.desktop.tipo, arrayDispositivos.desktop.tiempo);
+
+    arrayDispositivos.mobile.resultado = mob;
+    arrayDispositivos.notebook.resultado = not;
+    arrayDispositivos.desktop.resultado = desk;
+
+    let dispo = calcularDispositivos(mob, not, desk);
+    let ergo = '';
+    let ambiente = '';
+    arrayResultados = [dispo, ergo, ambiente];
 
     mostrarResultados();
 }
 
 function validarEntero(valor) {
     return Number.isInteger(Number(valor));
-
 }
-
 
 function mostrarResultados() {
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.innerHTML = '';
 
-  // Recuperar objeto del localStorage
-    usuarioJSON = localStorage.getItem('usuario');
+    // Recuperar objeto del localStorage
+    const usuarioJSON = localStorage.getItem('usuario');
     const usuarioGuardado = JSON.parse(usuarioJSON);
 
     console.log('Datos del usuario JSON: ' + usuarioJSON);
 
-    // Mostrar datos del usuario en HTML
+    // Mostrar datos del usuario 
     resultadoDiv.innerHTML += '<h2>Datos del Usuario:</h2>';
     resultadoDiv.innerHTML += '<ul>';
     for (const propiedad in usuarioGuardado) {
-    const valor = usuarioGuardado[propiedad];
-
-    const p = document.createElement('p');
-    p.textContent = `${propiedad}: ${valor}`;
-
-    resultadoDiv.appendChild(p);
+        const valor = usuarioGuardado[propiedad];
+        const p = document.createElement('li');
+        p.textContent = `${propiedad}: ${valor}`;
+        resultadoDiv.appendChild(p);
     }
+    resultadoDiv.innerHTML += '</ul>';
 
     // Mostrar datos de dispositivos
     resultadoDiv.innerHTML += '<h2>Datos de dispositivos:</h2>';
@@ -147,48 +156,95 @@ function mostrarResultados() {
     resultadoDiv.innerHTML += '<p>Dispositivos ★★★★☆</p>';
     resultadoDiv.innerHTML += '<p>Ergonomía ★★☆☆☆</p>';
     resultadoDiv.innerHTML += '<p>Ambiente ★☆☆☆☆</p>';
+
+    resultadoDiv.innerHTML += '<h2>Calculo detallado sobre el ARRAY (queda para la proxima entrega graficos y cosas bonitas!):</h2>';
+    resultadoDiv.innerHTML += '<p>Dispositivos' + arrayDispositivos.mobile.resultado + '</p>';
+    resultadoDiv.innerHTML += '<p>Ergonomía' + arrayDispositivos.notebook.resultado + '</p>';
+    resultadoDiv.innerHTML += '<p>Ambiente' + arrayDispositivos.desktop.resultado + '</p>';
 }
 
-//Creacion arrays dispositivos
+// Creación de arrays de dispositivos
 function crearDevices() {
     class userDevices {
-        constructor (marca, modelo, tipo, tiempo) {
+        constructor(marca, modelo, tipo, tiempo, resultado) {
             this.marca = marca;
             this.modelo = modelo;
             this.tipo = tipo;
             this.tiempo = tiempo;
+            this.resultado = resultado;
         }
     } 
 
-    const userDevicesMobile = new userDevices ("Apple", "iphone", "celular");
-    const userDevicesNotebook = new userDevices ("Asus", "Satellite", "notebook");
-    const userDevicesDesktop = new userDevices ("Dell", "Miracle", "desktop");
+    const userDevicesMobile = new userDevices("Apple", "iphone", "celular");
+    const userDevicesNotebook = new userDevices("Asus", "Satellite", "notebook");
+    const userDevicesDesktop = new userDevices("Dell", "Miracle", "desktop");
 
     arrayDispositivos = {
-        mobile : userDevicesMobile,
-        notebook : userDevicesNotebook,
-        desktop : userDevicesDesktop,
+        mobile: userDevicesMobile,
+        notebook: userDevicesNotebook,
+        desktop: userDevicesDesktop,
     };
 }
 
-//Creacion arrays lugares
+// Creación de arrays de lugares
 function crearPlaces() {
     class userPlaces {
-        constructor (lugar, tiempo) {
+        constructor(lugar, tiempo) {
             this.lugar = lugar;
             this.tiempo = tiempo;
         }
     } 
 
-    const userPlacesSillon = new userPlaces ("sillon", 2);
-    const userPlacesEscritorio = new userPlaces ("escritorio", 4);
-    const userPlacesMesa = new userPlaces ("mesa", 1);
-    const userPlacesCama = new userPlaces ("cama", 1);
+    const userPlacesSillon = new userPlaces("sillon", 2);
+    const userPlacesEscritorio = new userPlaces("escritorio", 4);
+    const userPlacesMesa = new userPlaces("mesa", 1);
+    const userPlacesCama = new userPlaces("cama", 1);
 
     arrayLugares = {
-        sillon : userPlacesSillon,
-        escritorio : userPlacesEscritorio,
-        mesa : userPlacesMesa,
-        cama : userPlacesCama,
+        sillon: userPlacesSillon,
+        escritorio: userPlacesEscritorio,
+        mesa: userPlacesMesa,
+        cama: userPlacesCama,
     };
+}
+
+function evaluar(tipo, valor) {
+    let horasMobile = 4;
+    let horasNotebook = 6;
+    let horasDesktop = 8;
+
+    function factorSeguridad(numero, porcentaje) {
+        numero = numero - numero * porcentaje / 100;
+        return numero;
+    }
+
+    switch (tipo) {
+        case 'celular': {
+            let resultadoMobile = factorSeguridad(valor, 5) / horasMobile;
+            console.log('Resultado switch Mobile: ' + resultadoMobile);
+            return resultadoMobile;
+        }
+        case 'notebook': {
+            let resultadoNotebook = factorSeguridad(valor, 5) / horasNotebook;
+            console.log('Resultado switch Notebook: ' + resultadoNotebook);
+            return resultadoNotebook;
+        }
+        case 'desktop': {
+            let resultadoDesktop = factorSeguridad(valor, 5) / horasDesktop;
+            console.log('Resultado switch Desktop: ' + resultadoDesktop);
+            return resultadoDesktop; 
+        }
+        default: {
+            console.log('Entramos en default');
+            break;
+        }
+    }
+}
+
+function calcularDispositivos(mob, not, desk) {
+    console.log('Funcion calcular, valor mob' + mob);
+
+    let prom = (mob + not + desk) / 3;
+    console.log('Funcion calcular, valor promedio' + prom);
+    return prom;
 }
