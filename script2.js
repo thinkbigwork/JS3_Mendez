@@ -117,33 +117,3 @@ function crearPlaces() {
         cama: userPlacesCama,
     };
 }
-
-function evaluar() {
-    function cargarTiempo() {
-        document.getElementById('pregunta-dispositivos').style.display = 'none';
-        const dispositivos = Object.values(arrayDispositivos);
-
-        dispositivos.forEach(function(device) {
-            const tiempo = prompt("Ingresa el tiempo para el dispositivo " + device.tipo + ":");
-            device.tiempo = tiempo;
-        });
-
-        mostrarResultados();
-    }
-    cargarTiempo();
-}
-
-function finalizar() {
-    do {
-        const continuar = confirm('¿Cometiste algún error? ¿Quieres volver a empezar ' + nombre + '?');
-        q1 = continuar ? 'SI' : 'NO';
-    } while (q1 !== 'SI' && q1 !== 'NO');
-}
-
-function mensaje() {
-    alert('Entonces no tenemos ninguna recomendación para vos!');
-}
-
-function informe() {
-    alert('Estamos evaluando tus condiciones de trabajo según la información ingresada');
-}

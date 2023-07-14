@@ -26,23 +26,25 @@
     </div>
 
     <div id="pregunta-dispositivos" style="display: none;">
-        <h2>Ingresa el tiempo de uso de tus dispositivos por día:</h2>
+        <h2>Ingresa el tiempo de uso por día de tus dispositivos:</h2>
         <div>
-            <p>Celular: 
-            <input type="text" id="tiempoCelular"> </p>
+            <p>Celular: <input type="text" id="tiempoCelular"> </p>
         </div>
         <div>
-            <p>Notebook: 
-            <input type="text" id="tiempoNotebook"> </p>
+            <p>Notebook: <input type="text" id="tiempoNotebook"> </p>
         </div>
         <div>
-            <p>PC de escritorio:
-            <input type="text" id="tiempoPc"> </p>
+            <p>PC de escritorio: <input type="text" id="tiempoPc"> </p>
         </div>
         <button onclick="cargarTiempo()">Guardar y Mostrar Resultados</button>
     </div>
 
+    <div id="mensaje" style="display: none;">
+        <h2>Entonces, por el momento no tenemos información para mostrarte</h2>     
+    </div>
+    
     <div id="resultado"></div>
+
 
     <script src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

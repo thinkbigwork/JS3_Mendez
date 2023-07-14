@@ -51,12 +51,64 @@ function continuarRemoto() {
     document.getElementById('pregunta-remoto').style.display = 'none';
     if (respuestaRemoto === 'SI') {
         document.getElementById('pregunta-dispositivos').style.display = 'block';
-        evaluar();
-    } else {
+/*         evaluar();
+ */    } else {
         mensaje();
-        mostrarResultados();
     }
 }
+
+function mensaje (){
+    document.getElementById('mensaje').style.display = 'block';
+}
+
+function cargarTiempo() {
+    const tiempoCelular = document.getElementById('tiempoCelular').value;
+    const tiempoNotebook = document.getElementById('tiempoNotebook').value;
+    const tiempoPc = document.getElementById('tiempoPc').value;
+
+    arrayDispositivos.mobile.tiempo = tiempoCelular;
+    arrayDispositivos.notebook.tiempo = tiempoNotebook;
+    arrayDispositivos.desktop.tiempo = tiempoPc;
+
+    console.log(arrayLugares);
+    console.log(arrayDispositivos);
+
+
+    mostrarResultados();
+};
+
+
+/*     mostrarResultados();
+ */
+function mostrarResultados() {
+    const resultadoDiv = document.getElementById('resultado');
+    resultadoDiv.innerHTML = '';
+
+    // Mostrar datos de dispositivos
+    resultadoDiv.innerHTML += '<h2>Datos de dispositivos:</h2>';
+    resultadoDiv.innerHTML += '<ul>';
+    for (const dispositivo in arrayDispositivos) {
+        const infoDispositivo = arrayDispositivos[dispositivo];
+        resultadoDiv.innerHTML += '<li>' + infoDispositivo.marca + ' ' + infoDispositivo.modelo + ' (' + infoDispositivo.tipo + ')</li>';
+    }
+    resultadoDiv.innerHTML += '</ul>';
+
+    // Mostrar datos de lugares
+    resultadoDiv.innerHTML += '<h2>Datos de lugares:</h2>';
+    resultadoDiv.innerHTML += '<ul>';
+    for (const lugar in arrayLugares) {
+        const infoLugar = arrayLugares[lugar];
+        resultadoDiv.innerHTML += '<li>' + infoLugar.lugar + ' - Tiempo de uso: ' + infoLugar.tiempo + ' horas</li>';
+    }
+    resultadoDiv.innerHTML += '</ul>';
+
+    // Mostrar resultado final
+    resultadoDiv.innerHTML += '<h2>Resultado del puesto de trabajo:</h2>';
+    resultadoDiv.innerHTML += '<p>Dispositivos ★★★★☆</p>';
+    resultadoDiv.innerHTML += '<p>Ergonomía ★★☆☆☆</p>';
+    resultadoDiv.innerHTML += '<p>Ambiente ★☆☆☆☆</p>';
+}
+
 
 
 
@@ -81,6 +133,8 @@ class userDevices {
         notebook : userDevicesNotebook,
         desktop : userDevicesDesktop,
     };
+    console.log(arrayDispositivos);
+
 }
 //Creacion arrays lugares
 function crearPlaces (){
@@ -103,50 +157,13 @@ function crearPlaces (){
         };
         console.log(arrayLugares);
 
-    }
-
-function evaluar(){
-    function cargarTiempo(){
-            Object.values(arrayDispositivos).forEach(function (device) {
-            /* device.tiempo = prompt("Ingresa el tiempo para el dispositivo " + device.tipo + ":"); */
-            return arrayDispositivos;
-        });
-    }
-    cargarTiempo();
 }
 
 
-function finalizar(){
-    do{
-        const continuar = 'Cometiste algún error? Quieres volver a empezar ' + nombre + ' ?. Indica "SI" o "NO"';
-        /* q1 = prompt(continuar); */
-        q1 = q1.toUpperCase();
-    }while(q1 !== 'SI' && q1 !== 'NO');
-}
-
-function mensaje (){
-    console.log('Entonces no tenemos ninguna recomendación para vos!');
-}
 
 
-function informe(){
-    console.log('Estamos evaluando tus condiciones de trabajo según la información ignresada');
-    function mostrar() {
-        console.log('\n==============================================================\nEstos son los datos registrados sobre tus dispositivos');
-        const dispositivos = arrayDispositivos;
-        console.log(dispositivos.mobile);
-        console.log(dispositivos.notebook);
-        console.log(dispositivos.desktop);
 
-        console.log('\n==============================================================\nEstos son los datos registrados sobre los lugares de tu hogar que utilizás para trabajar');
-        const lugares = arrayLugares;
-        console.log(lugares.sillon);
-        console.log(lugares.escritorio);
-        console.log(lugares.mesa);
-        console.log(lugares.cama);
-        }
-    mostrar();
-
+/*
     function calcular(){
 
         function extraerTiempos(lugares) {
@@ -166,10 +183,9 @@ function informe(){
         console.log('El tiempo de exposicion es: ' + devices);
         
         }
-    calcular();
+    calcular(); */
+    
     // en la próxima entrega los resultados serán dinámicos. 
-    console.log('\n==============================================================\nEste es el resultado de tu puesto de trabajo: \nDispositivos ★★★★☆\nErgonomía ★★☆☆☆\nAmbiente ★☆☆☆☆');
-    alert('Este es el resultado de tu puesto de trabajo: \n \nDispositivos ★★★★☆\nErgonomía ★★☆☆☆\nAmbiente ★☆☆☆☆');
-}
+    
 
 
