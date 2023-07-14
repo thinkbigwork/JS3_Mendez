@@ -1,30 +1,68 @@
 //js para cuestionario
 
-// definicion de variables y funciones
+// definicion de variables globales
 let q1 = 0;
 let op = 0;
-let nombre;
+let nombre ='';
 let arrayDispositivos;
 let arrayLugares;
+crearDevices();
+crearPlaces();
+
+// programa principal ayuda memoria!
+/*  usuario();
+    remoto();
+    crearDevices();
+    crearPlaces();
+    do{
+        if(q1=='SI'){evaluar();}
+        else{mensaje();}
+        finalizar();
+    }while(q1 == 'SI');
+    informe(); */
+// finaliza programa ppal.
+
 
 //funcion de inicio
+function iniciarCuestionario() {
+    usuario();
+}
+
+function iniciarCuestionario() {
+    nombre = document.getElementById('nombreInput').value.trim();
+    if (nombre === '') {
+        document.getElementById('errorNombre').style.display = 'block';
+        return;
+    }
+    document.getElementById('errorNombre').style.display = 'none';
+    usuario();
+    document.getElementById('pregunta-remoto').style.display = 'block';
+}
+
 function usuario(){
-    nombre = prompt('Introduce tu nombre');
     nombre = nombre.toUpperCase();
-    alert('Hola ' + nombre + ', comencemos con la evaluación!');
+    document.getElementById('nombreInput').disabled = true;
+    document.getElementById('bienvenida').innerText = '¡Bienvenido/a, ' + nombre + '!';
+    document.getElementById('bienvenida').style.display = 'block';
 }
 
-function remoto(){
-    do{
-        const question = '¿Trabajas en forma remota?. Indica SI o NO';
-        q1 = prompt(question);
-        q1 = q1.toUpperCase();
-        console.log(q1); //solo para visualizar que está sucediendo
-        console.log(nombre); //solo para visualizar que está sucediendo
-    }while(q1 !== 'SI' && q1 !== 'NO');
+function continuarRemoto() {
+    const respuestaRemoto = document.querySelector('input[name="remoto"]:checked').value;
+    document.getElementById('pregunta-remoto').style.display = 'none';
+    if (respuestaRemoto === 'SI') {
+        document.getElementById('pregunta-dispositivos').style.display = 'block';
+        evaluar();
+    } else {
+        mensaje();
+        mostrarResultados();
+    }
 }
 
-//Creacion arrays
+
+
+
+
+//Creacion arrays dispositivos
 function crearDevices (){
 class userDevices {
     constructor (marca, modelo, tipo, tiempo){
@@ -44,7 +82,7 @@ class userDevices {
         desktop : userDevicesDesktop,
     };
 }
-
+//Creacion arrays lugares
 function crearPlaces (){
     class userPlaces {
         constructor (lugar, tiempo){
@@ -69,9 +107,8 @@ function crearPlaces (){
 
 function evaluar(){
     function cargarTiempo(){
-        alert('A continuación deberás ingresar la cantidad de horas de uso que utilizas cada dispositivo por día');
-        Object.values(arrayDispositivos).forEach(function (device) {
-            device.tiempo = prompt("Ingresa el tiempo para el dispositivo " + device.tipo + ":");
+            Object.values(arrayDispositivos).forEach(function (device) {
+            /* device.tiempo = prompt("Ingresa el tiempo para el dispositivo " + device.tipo + ":"); */
             return arrayDispositivos;
         });
     }
@@ -82,18 +119,18 @@ function evaluar(){
 function finalizar(){
     do{
         const continuar = 'Cometiste algún error? Quieres volver a empezar ' + nombre + ' ?. Indica "SI" o "NO"';
-        q1 = prompt(continuar);
+        /* q1 = prompt(continuar); */
         q1 = q1.toUpperCase();
     }while(q1 !== 'SI' && q1 !== 'NO');
 }
 
 function mensaje (){
-    alert('Entonces no tenemos ninguna recomendación para vos!');
+    console.log('Entonces no tenemos ninguna recomendación para vos!');
 }
 
 
 function informe(){
-    alert('Estamos evaluando tus condiciones de trabajo según la información ignresada');
+    console.log('Estamos evaluando tus condiciones de trabajo según la información ignresada');
     function mostrar() {
         console.log('\n==============================================================\nEstos son los datos registrados sobre tus dispositivos');
         const dispositivos = arrayDispositivos;
@@ -135,24 +172,4 @@ function informe(){
     alert('Este es el resultado de tu puesto de trabajo: \n \nDispositivos ★★★★☆\nErgonomía ★★☆☆☆\nAmbiente ★☆☆☆☆');
 }
 
-miBotton.onclick
-Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Something went wrong!',
-    footer: '<a href="">Why do I have this issue?</a>'
-  })
 
-
-// programa principal
-usuario();
-remoto();
-crearDevices();
-crearPlaces();
-do{
-    if(q1=='SI'){evaluar();}
-    else{mensaje();}
-    finalizar();
-}while(q1 == 'SI');
-informe();
-// finaliza programa ppal.

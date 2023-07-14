@@ -3,11 +3,11 @@ working at home
 <img src="https://github.com/thinkbigwork/WorkingAtHome/blob/main/img/headers/slide_working_at_home.png" align="center" height="240" alt="GridDB"/>
 
 Repositorio
-https://github.com/thinkbigwork/JS2_Mendez
+https://github.com/thinkbigwork/JS3_Mendez
 
 
 Deployed
-https://thinkbigwork.github.io/JS2_Mendez/
+https://thinkbigwork.github.io/JS3_Mendez/
 
 
 En tiempos de trabajo remoto, hacer un diagnóstico sobre las condiciones laborales dentro de nuestro propio hogar nos permite conocer cuáles son las problemáticas y las posibilidades de mejora de nuestro espacio de trabajo, y así poder trabajar de forma más eficiente, segura y sobre todo cuidar nuestra salud mental y física y cuidar el medio ambiente.
@@ -31,7 +31,7 @@ En esta primera etapa de JS la herramienta pretende que el usuario pueda evaluar
 -----------
 
 Es muy sencillo, carga el index.html, y sigue las instrucciones.
-https://thinkbigwork.github.io/JS2_Mendez/
+https://thinkbigwork.github.io/JS3_Mendez/
 
 
 

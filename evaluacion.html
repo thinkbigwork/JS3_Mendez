@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cuestionario</title>
+    <script src="script2.js"></script>
+</head>
+<body>
+    <h1>Cuestionario</h1>
+
+    <div>
+        <p>Introduce tu nombre:</p>
+        <input type="text" id="nombreInput">
+        <button onclick="iniciarCuestionario()">Iniciar Cuestionario</button>
+    </div>
+
+    <div id="pregunta-remoto" style="display: none;">
+        <p>¿Trabajas en forma remota? Indica SI o NO:</p>
+        <input type="radio" name="remoto" value="SI">SI
+        <input type="radio" name="remoto" value="NO">NO
+        <button onclick="continuarRemoto()">Continuar</button>
+    </div>
+
+    <div id="pregunta-dispositivos" style="display: none;">
+        <h2>Ingresa el tiempo de uso de tus dispositivos por día:</h2>
+        <button onclick="cargarTiempo()">Guardar y Mostrar Resultados</button>
+    </div>
+
+    <div id="resultado"></div>
+</body>
+</html>

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Evaluar</title>
-    </head>
+<html>
+<head>
+    <title>Cuestionario</title>
+    <script src="ejemplo.js"></script>
+</head>
 <body>
     <h1>Cuestionario</h1>
 
@@ -17,8 +15,6 @@
     </div>
 
     <div id="pregunta-remoto" style="display: none;">
-        <p id="bienvenida" style="color: blue; display: none;"></p>
-
         <p>¿Trabajas en forma remota? Indica SI o NO:</p>
         <input type="radio" name="remoto" value="SI">SI
         <input type="radio" name="remoto" value="NO">NO
@@ -27,24 +23,9 @@
 
     <div id="pregunta-dispositivos" style="display: none;">
         <h2>Ingresa el tiempo de uso de tus dispositivos por día:</h2>
-        <div>
-            <p>Celular: 
-            <input type="text" id="tiempoCelular"> </p>
-        </div>
-        <div>
-            <p>Notebook: 
-            <input type="text" id="tiempoNotebook"> </p>
-        </div>
-        <div>
-            <p>PC de escritorio:
-            <input type="text" id="tiempoPc"> </p>
-        </div>
         <button onclick="cargarTiempo()">Guardar y Mostrar Resultados</button>
     </div>
 
     <div id="resultado"></div>
-
-    <script src="./script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
