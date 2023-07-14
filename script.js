@@ -1,63 +1,77 @@
-//js para cuestionario
-
 // definicion de variables globales
-let q1 = 0;
-let op = 0;
 let nombre ='';
+let password ='';
+let profesion = '';
 let arrayDispositivos;
 let arrayLugares;
+let nombreUsuario;
 crearDevices();
 crearPlaces();
 
-// programa principal ayuda memoria!
-/*  usuario();
-    remoto();
-    crearDevices();
-    crearPlaces();
-    do{
-        if(q1=='SI'){evaluar();}
-        else{mensaje();}
-        finalizar();
-    }while(q1 == 'SI');
-    informe(); */
-// finaliza programa ppal.
-
-
 //funcion de inicio
 function iniciarCuestionario() {
-    usuario();
-}
-
-function iniciarCuestionario() {
+   
     nombre = document.getElementById('nombreInput').value.trim();
-    if (nombre === '') {
-        document.getElementById('errorNombre').style.display = 'block';
+    password = document.getElementById('passwordInput').value.trim();
+    profesion = document.getElementById('profesionInput').value.trim();
+
+    if (nombre === '' || password === '' || profesion === '') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor, completa todos los campos.',
+        });
         return;
     }
+    
+    if (password.length < 5) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'La contraseña debe tener al menos 5 caracteres.',
+        });
+        return;
+    }
+
     document.getElementById('errorNombre').style.display = 'none';
+    document.getElementById('errorProfesion').style.display = 'none';
+    document.getElementById('errorPassword').style.display = 'none';
+
     usuario();
     document.getElementById('pregunta-remoto').style.display = 'block';
 }
 
-function usuario(){
+function usuario() {
     nombre = nombre.toUpperCase();
+    document.getElementById('nombreInput').disabled = true;
+    document.getElementById('nombreInput').disabled = true;
     document.getElementById('nombreInput').disabled = true;
     document.getElementById('bienvenida').innerText = '¡Bienvenido/a, ' + nombre + '!';
     document.getElementById('bienvenida').style.display = 'block';
+
+// Guardo datos de usuario en el localStorage
+const usuario = {
+    nombre: nombre,
+    password: password,
+    profesion: profesion,
+  };
+  
+  const usuarioJSON = JSON.stringify(usuario);
+  localStorage.setItem('usuario', usuarioJSON);
 }
+
 
 function continuarRemoto() {
     const respuestaRemoto = document.querySelector('input[name="remoto"]:checked').value;
     document.getElementById('pregunta-remoto').style.display = 'none';
     if (respuestaRemoto === 'SI') {
         document.getElementById('pregunta-dispositivos').style.display = 'block';
-/*         evaluar();
- */    } else {
+    } else {
         mensaje();
     }
 }
 
-function mensaje (){
+function mensaje() {
     document.getElementById('mensaje').style.display = 'block';
 }
 
@@ -66,30 +80,56 @@ function cargarTiempo() {
     const tiempoNotebook = document.getElementById('tiempoNotebook').value;
     const tiempoPc = document.getElementById('tiempoPc').value;
 
+    if (!validarEntero(tiempoCelular) || !validarEntero(tiempoNotebook) || !validarEntero(tiempoPc)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Pecado Capital',
+            text: 'Soy el cartel rabioso, sos jodido eh!. Por el bien de la humanidad colocá solo números enteros, si papito?',
+        });
+        return;
+    }
+
     arrayDispositivos.mobile.tiempo = tiempoCelular;
     arrayDispositivos.notebook.tiempo = tiempoNotebook;
     arrayDispositivos.desktop.tiempo = tiempoPc;
 
-    console.log(arrayLugares);
-    console.log(arrayDispositivos);
-
-
     mostrarResultados();
-};
+}
+
+function validarEntero(valor) {
+    return Number.isInteger(Number(valor));
+
+}
 
 
-/*     mostrarResultados();
- */
 function mostrarResultados() {
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.innerHTML = '';
+
+  // Recuperar objeto del localStorage
+    usuarioJSON = localStorage.getItem('usuario');
+    const usuarioGuardado = JSON.parse(usuarioJSON);
+
+    console.log('Datos del usuario JSON: ' + usuarioJSON);
+
+    // Mostrar datos del usuario en HTML
+    resultadoDiv.innerHTML += '<h2>Datos del Usuario:</h2>';
+    resultadoDiv.innerHTML += '<ul>';
+    for (const propiedad in usuarioGuardado) {
+    const valor = usuarioGuardado[propiedad];
+
+    const p = document.createElement('p');
+    p.textContent = `${propiedad}: ${valor}`;
+
+    resultadoDiv.appendChild(p);
+    }
 
     // Mostrar datos de dispositivos
     resultadoDiv.innerHTML += '<h2>Datos de dispositivos:</h2>';
     resultadoDiv.innerHTML += '<ul>';
     for (const dispositivo in arrayDispositivos) {
         const infoDispositivo = arrayDispositivos[dispositivo];
-        resultadoDiv.innerHTML += '<li>' + infoDispositivo.marca + ' ' + infoDispositivo.modelo + ' (' + infoDispositivo.tipo + ')</li>';
+        resultadoDiv.innerHTML += '<li>' + infoDispositivo.marca + ' ' + infoDispositivo.modelo + ' (' + infoDispositivo.tipo + '): ' + infoDispositivo.tiempo + ' horas</li>';
     }
     resultadoDiv.innerHTML += '</ul>';
 
@@ -109,21 +149,17 @@ function mostrarResultados() {
     resultadoDiv.innerHTML += '<p>Ambiente ★☆☆☆☆</p>';
 }
 
-
-
-
-
-
 //Creacion arrays dispositivos
-function crearDevices (){
-class userDevices {
-    constructor (marca, modelo, tipo, tiempo){
-        this.marca = marca;
-        this.modelo = modelo;
-        this.tipo = tipo;
-        this.tiempo = tiempo;
-    }
-} 
+function crearDevices() {
+    class userDevices {
+        constructor (marca, modelo, tipo, tiempo) {
+            this.marca = marca;
+            this.modelo = modelo;
+            this.tipo = tipo;
+            this.tiempo = tiempo;
+        }
+    } 
+
     const userDevicesMobile = new userDevices ("Apple", "iphone", "celular");
     const userDevicesNotebook = new userDevices ("Asus", "Satellite", "notebook");
     const userDevicesDesktop = new userDevices ("Dell", "Miracle", "desktop");
@@ -133,59 +169,26 @@ class userDevices {
         notebook : userDevicesNotebook,
         desktop : userDevicesDesktop,
     };
-    console.log(arrayDispositivos);
-
 }
+
 //Creacion arrays lugares
-function crearPlaces (){
+function crearPlaces() {
     class userPlaces {
-        constructor (lugar, tiempo){
+        constructor (lugar, tiempo) {
             this.lugar = lugar;
             this.tiempo = tiempo;
         }
     } 
-        const userPlacesSillon = new userPlaces ("sillon", 2);
-        const userPlacesEscritorio = new userPlaces ("escritorio", 4);
-        const userPlacesMesa = new userPlaces ("mesa", 1);
-        const userPlacesCama = new userPlaces ("cama", 1);
 
-        arrayLugares = {
-            sillon : userPlacesSillon,
-            escritorio : userPlacesEscritorio,
-            mesa : userPlacesMesa,
-            cama : userPlacesCama,
-        };
-        console.log(arrayLugares);
+    const userPlacesSillon = new userPlaces ("sillon", 2);
+    const userPlacesEscritorio = new userPlaces ("escritorio", 4);
+    const userPlacesMesa = new userPlaces ("mesa", 1);
+    const userPlacesCama = new userPlaces ("cama", 1);
 
+    arrayLugares = {
+        sillon : userPlacesSillon,
+        escritorio : userPlacesEscritorio,
+        mesa : userPlacesMesa,
+        cama : userPlacesCama,
+    };
 }
-
-
-
-
-
-/*
-    function calcular(){
-
-        function extraerTiempos(lugares) {
-            const tiempos = Object.values(lugares).map(lugar => lugar.tiempo);
-            return tiempos;
-          }
-        const tiemposLugaresArray = extraerTiempos(arrayLugares);
-        console.log(tiemposLugaresArray);
-
-        function calcularPromedio(tiemposLugaresArray) {
-            const suma = tiemposLugaresArray.reduce((acumulador, valor) => acumulador + valor, 0);
-            const promedio = suma / tiemposLugaresArray.length;
-            return promedio;
-          }
-
-        devices = calcularPromedio(tiemposLugaresArray);
-        console.log('El tiempo de exposicion es: ' + devices);
-        
-        }
-    calcular(); */
-    
-    // en la próxima entrega los resultados serán dinámicos. 
-    
-
-
