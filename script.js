@@ -158,9 +158,9 @@ function mostrarResultados() {
     resultadoDiv.innerHTML += '<p>Ambiente ★☆☆☆☆</p>';
 
     resultadoDiv.innerHTML += '<h2>Calculo detallado sobre el ARRAY (queda para la proxima entrega graficos y cosas bonitas!):</h2>';
-    resultadoDiv.innerHTML += '<p>Dispositivos' + arrayDispositivos.mobile.resultado + '</p>';
-    resultadoDiv.innerHTML += '<p>Ergonomía' + arrayDispositivos.notebook.resultado + '</p>';
-    resultadoDiv.innerHTML += '<p>Ambiente' + arrayDispositivos.desktop.resultado + '</p>';
+    resultadoDiv.innerHTML += '<p>Dispositivos: ' + arrayDispositivos.mobile.resultado + '</p>';
+    resultadoDiv.innerHTML += '<p>Ergonomía: ' + arrayDispositivos.notebook.resultado + '</p>';
+    resultadoDiv.innerHTML += '<p>Ambiente: ' + arrayDispositivos.desktop.resultado + '</p>';
 }
 
 // Creación de arrays de dispositivos
@@ -221,17 +221,17 @@ function evaluar(tipo, valor) {
     switch (tipo) {
         case 'celular': {
             let resultadoMobile = factorSeguridad(valor, 5) / horasMobile;
-            console.log('Resultado switch Mobile: ' + resultadoMobile);
+            console.log('Resultado switch Mobile: ' + resultadoMobile); // muestra interna para control
             return resultadoMobile;
         }
         case 'notebook': {
             let resultadoNotebook = factorSeguridad(valor, 5) / horasNotebook;
-            console.log('Resultado switch Notebook: ' + resultadoNotebook);
+            console.log('Resultado switch Notebook: ' + resultadoNotebook); // muestra interna para control
             return resultadoNotebook;
         }
         case 'desktop': {
             let resultadoDesktop = factorSeguridad(valor, 5) / horasDesktop;
-            console.log('Resultado switch Desktop: ' + resultadoDesktop);
+            console.log('Resultado switch Desktop: ' + resultadoDesktop); // muestra interna para control
             return resultadoDesktop; 
         }
         default: {
@@ -242,9 +242,6 @@ function evaluar(tipo, valor) {
 }
 
 function calcularDispositivos(mob, not, desk) {
-    console.log('Funcion calcular, valor mob' + mob);
-
     let prom = (mob + not + desk) / 3;
-    console.log('Funcion calcular, valor promedio' + prom);
     return prom;
 }
